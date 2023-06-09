@@ -1,0 +1,5 @@
+/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/Flash/flash_manager.c:467:13:FM_WindowAllowed_Callback	0	static
+/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/Flash/flash_manager.c:392:24:FM_CheckFlashManagerState	16	static,ignoring_inline_asm
+/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/Flash/flash_manager.c:130:17:FM_Write	24	static
+/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/Flash/flash_manager.c:172:17:FM_Erase	16	static
+/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/Flash/flash_manager.c:210:6:FM_BackgroundProcess	24	static,ignoring_inline_asm

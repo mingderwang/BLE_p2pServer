@@ -1,0 +1,2 @@
+/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/Middlewares/ST/STM32_WPAN/link_layer/ll_sys/src/ll_sys_hclk_client.c:31:6:ll_sys_radio_hclk_ctrl_init	0	static
+/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/Middlewares/ST/STM32_WPAN/link_layer/ll_sys/src/ll_sys_hclk_client.c:42:6:ll_sys_radio_hclk_ctrl_req	16	static
