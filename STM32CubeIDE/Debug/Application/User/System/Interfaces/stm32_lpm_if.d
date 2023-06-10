@@ -73,6 +73,10 @@ Application/User/System/Interfaces/stm32_lpm_if.o: \
  ../../System/Config/Debug_GPIO/debug_config.h ../../Core/Inc/app_conf.h \
  ../../System/Modules/RTDebug/debug_signals.h \
  ../../Middlewares/ST/STM32_WPAN/link_layer/ll_cmd_lib/inc/bsp.h \
+ ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h \
+ ../../Core/Inc/stm32wbaxx_nucleo_conf.h \
+ ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h \
+ ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_ll_tim.h \
  ../../System/Modules/scm.h \
  /Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Interfaces/stm32_lpm_if.h \
  ../../Utilities/lpm/tiny_lpm/stm32_lpm.h \
@@ -155,6 +159,10 @@ Application/User/System/Interfaces/stm32_lpm_if.o: \
 ../../Core/Inc/app_conf.h:
 ../../System/Modules/RTDebug/debug_signals.h:
 ../../Middlewares/ST/STM32_WPAN/link_layer/ll_cmd_lib/inc/bsp.h:
+../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h:
+../../Core/Inc/stm32wbaxx_nucleo_conf.h:
+../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h:
+../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_ll_tim.h:
 ../../System/Modules/scm.h:
 /Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Interfaces/stm32_lpm_if.h:
 ../../Utilities/lpm/tiny_lpm/stm32_lpm.h:

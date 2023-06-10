@@ -74,6 +74,10 @@ Application/User/Core/app_entry.o: \
  ../../System/Config/Debug_GPIO/debug_config.h \
  ../../System/Modules/RTDebug/debug_signals.h \
  ../../Middlewares/ST/STM32_WPAN/link_layer/ll_cmd_lib/inc/bsp.h \
+ ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h \
+ ../../Core/Inc/stm32wbaxx_nucleo_conf.h \
+ ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h \
+ ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_ll_tim.h \
  ../../Core/Inc/app_entry.h ../../Utilities/sequencer/stm32_seq.h \
  ../../Utilities/lpm/tiny_lpm/stm32_lpm.h \
  ../../Utilities/tim_serv/stm32_timer.h \
@@ -91,11 +95,7 @@ Application/User/Core/app_entry.o: \
  ../../System/Modules/Flash/simple_nvm_arbiter_common.h \
  ../../System/Config/Flash/simple_nvm_arbiter_conf.h \
  ../../System/Modules/Flash/simple_nvm_arbiter_common.h \
- ../../System/Modules/adc_ctrl.h \
- ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h \
- ../../Core/Inc/stm32wbaxx_nucleo_conf.h \
- ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h \
- ../../System/Interfaces/usart_if.h
+ ../../System/Modules/adc_ctrl.h ../../System/Interfaces/usart_if.h
 ../../Core/Inc/app_common.h:
 ../../Core/Inc/app_conf.h:
 ../../System/Interfaces/hw_if.h:
@@ -174,6 +174,10 @@ Application/User/Core/app_entry.o: \
 ../../System/Config/Debug_GPIO/debug_config.h:
 ../../System/Modules/RTDebug/debug_signals.h:
 ../../Middlewares/ST/STM32_WPAN/link_layer/ll_cmd_lib/inc/bsp.h:
+../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h:
+../../Core/Inc/stm32wbaxx_nucleo_conf.h:
+../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h:
+../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_ll_tim.h:
 ../../Core/Inc/app_entry.h:
 ../../Utilities/sequencer/stm32_seq.h:
 ../../Utilities/lpm/tiny_lpm/stm32_lpm.h:
@@ -196,7 +200,4 @@ Application/User/Core/app_entry.o: \
 ../../System/Config/Flash/simple_nvm_arbiter_conf.h:
 ../../System/Modules/Flash/simple_nvm_arbiter_common.h:
 ../../System/Modules/adc_ctrl.h:
-../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h:
-../../Core/Inc/stm32wbaxx_nucleo_conf.h:
-../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h:
 ../../System/Interfaces/usart_if.h:

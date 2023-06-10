@@ -73,6 +73,10 @@ Application/User/STM32_WPAN/Target/ll_sys_if.o: \
  ../../System/Config/Debug_GPIO/debug_config.h ../../Core/Inc/app_conf.h \
  ../../System/Modules/RTDebug/debug_signals.h \
  ../../Middlewares/ST/STM32_WPAN/link_layer/ll_cmd_lib/inc/bsp.h \
+ ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h \
+ ../../Core/Inc/stm32wbaxx_nucleo_conf.h \
+ ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h \
+ ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_ll_tim.h \
  ../../Utilities/sequencer/stm32_seq.h ../../System/Modules/adc_ctrl.h \
  ../../Middlewares/ST/STM32_WPAN/link_layer/ll_sys/inc/linklayer_plat.h
 ../../Core/Inc/app_common.h:
@@ -153,6 +157,10 @@ Application/User/STM32_WPAN/Target/ll_sys_if.o: \
 ../../Core/Inc/app_conf.h:
 ../../System/Modules/RTDebug/debug_signals.h:
 ../../Middlewares/ST/STM32_WPAN/link_layer/ll_cmd_lib/inc/bsp.h:
+../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h:
+../../Core/Inc/stm32wbaxx_nucleo_conf.h:
+../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h:
+../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_ll_tim.h:
 ../../Utilities/sequencer/stm32_seq.h:
 ../../System/Modules/adc_ctrl.h:
 ../../Middlewares/ST/STM32_WPAN/link_layer/ll_sys/inc/linklayer_plat.h:

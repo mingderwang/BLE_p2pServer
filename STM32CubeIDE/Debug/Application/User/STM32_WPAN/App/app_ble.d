@@ -73,6 +73,10 @@ Application/User/STM32_WPAN/App/app_ble.o: \
  ../../System/Config/Debug_GPIO/debug_config.h ../../Core/Inc/app_conf.h \
  ../../System/Modules/RTDebug/debug_signals.h \
  ../../Middlewares/ST/STM32_WPAN/link_layer/ll_cmd_lib/inc/bsp.h \
+ ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h \
+ ../../Core/Inc/stm32wbaxx_nucleo_conf.h \
+ ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h \
+ ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_ll_tim.h \
  ../../Core/Inc/app_common.h ../../Middlewares/ST/STM32_WPAN/ble/ble.h \
  ../../STM32_WPAN/App/ble_conf.h ../../STM32_WPAN/App/ble_dbg_conf.h \
  ../../Middlewares/ST/STM32_WPAN/ble/stack/include/ble_core.h \
@@ -109,10 +113,7 @@ Application/User/STM32_WPAN/App/app_ble.o: \
  ../../System/Config/Flash/simple_nvm_arbiter_conf.h \
  ../../System/Modules/Flash/simple_nvm_arbiter_common.h \
  /Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/App/p2p_server.h \
- /Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/App/p2p_server_app.h \
- ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h \
- ../../Core/Inc/stm32wbaxx_nucleo_conf.h \
- ../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h
+ /Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/App/p2p_server_app.h
 ../../Core/Inc/main.h:
 ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal.h:
 ../../Core/Inc/stm32wbaxx_hal_conf.h:
@@ -190,6 +191,10 @@ Application/User/STM32_WPAN/App/app_ble.o: \
 ../../Core/Inc/app_conf.h:
 ../../System/Modules/RTDebug/debug_signals.h:
 ../../Middlewares/ST/STM32_WPAN/link_layer/ll_cmd_lib/inc/bsp.h:
+../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h:
+../../Core/Inc/stm32wbaxx_nucleo_conf.h:
+../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h:
+../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_ll_tim.h:
 ../../Core/Inc/app_common.h:
 ../../Middlewares/ST/STM32_WPAN/ble/ble.h:
 ../../STM32_WPAN/App/ble_conf.h:
@@ -231,6 +236,3 @@ Application/User/STM32_WPAN/App/app_ble.o: \
 ../../System/Modules/Flash/simple_nvm_arbiter_common.h:
 /Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/App/p2p_server.h:
 /Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/App/p2p_server_app.h:
-../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.h:
-../../Core/Inc/stm32wbaxx_nucleo_conf.h:
-../../Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h:
