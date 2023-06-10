@@ -38,6 +38,8 @@ Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.o: \
  ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_rng_ex.h \
  ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_rtc.h \
  ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_rtc_ex.h \
+ ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_tim.h \
+ ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_tim_ex.h \
  ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_uart.h \
  ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_uart_ex.h \
  /Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h
@@ -79,6 +81,8 @@ Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo.o: \
 ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_rng_ex.h:
 ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_rtc.h:
 ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_rtc_ex.h:
+../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_tim.h:
+../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_tim_ex.h:
 ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_uart.h:
 ../../Drivers/STM32WBAxx_HAL_Driver/Inc/stm32wbaxx_hal_uart_ex.h:
 /Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/Drivers/BSP/STM32WBAxx_Nucleo/stm32wbaxx_nucleo_errno.h:

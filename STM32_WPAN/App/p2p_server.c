@@ -66,7 +66,7 @@ typedef struct{
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-static const uint8_t SizeLed_C = 3;
+static const uint8_t SizeLed_C = 2;
 static const uint8_t SizeSwitch_C = 2;
 
 static P2P_SERVER_Context_t P2P_SERVER_Context;
@@ -101,13 +101,13 @@ do {\
 /*
  The following 128bits UUIDs have been generated from the random UUID
  generator:
- 0000912c-8cb0-4a7c-a35f-6e1a5d8e236b: Service 128bits UUID
- 0000912c-8cb1-4a7c-a35f-6e1a5d8e236b: Characteristic_1 128bits UUID
- 0000912c-8cb2-4a7c-a35f-6e1a5d8e236b: Characteristic_2 128bits UUID
+ D973F2E0-B19E-11E2-9E96-0800200C9A66: Service 128bits UUID
+ D973F2E1-B19E-11E2-9E96-0800200C9A66: Characteristic_1 128bits UUID
+ D973F2E2-B19E-11E2-9E96-0800200C9A66: Characteristic_2 128bits UUID
  */
-#define COPY_P2P_SERVER_UUID(uuid_struct)       COPY_UUID_128(uuid_struct,0x00, 0x00, 0x91, 0x2c, 0x8c, 0xb0, 0x4a, 0x7c, 0xa3, 0x5f, 0x6e, 0x1a, 0x5d, 0x8e, 0x23, 0x6b)
-#define COPY_LED_C_UUID(uuid_struct)       COPY_UUID_128(uuid_struct,0x00, 0x00, 0x91, 0x2c, 0x8c, 0xb1, 0x4a, 0x7c, 0xa3, 0x5f, 0x6e, 0x1a, 0x5d, 0x8e, 0x23, 0x6b)
-#define COPY_SWITCH_C_UUID(uuid_struct)       COPY_UUID_128(uuid_struct,0x00, 0x00, 0x91, 0x2c, 0x8c, 0xb2, 0x4a, 0x7c, 0xa3, 0x5f, 0x6e, 0x1a, 0x5d, 0x8e, 0x23, 0x6b)
+#define COPY_P2P_SERVER_UUID(uuid_struct)       COPY_UUID_128(uuid_struct,0x00,0x00,0xfe,0x40,0xcc,0x7a,0x48,0x2a,0x98,0x4a,0x7f,0x2e,0xd5,0xb3,0xe5,0x8f)
+#define COPY_LED_C_UUID(uuid_struct)       COPY_UUID_128(uuid_struct,0x00,0x00,0xfe,0x41,0x8e,0x22,0x45,0x41,0x9d,0x4c,0x21,0xed,0xae,0x82,0xed,0x19)
+#define COPY_SWITCH_C_UUID(uuid_struct)       COPY_UUID_128(uuid_struct,0x00,0x00,0xfe,0x42,0x8e,0x22,0x45,0x41,0x9d,0x4c,0x21,0xed,0xae,0x82,0xed,0x19)
 
 /* USER CODE BEGIN PF */
 
@@ -320,16 +320,16 @@ void P2P_SERVER_Init(void)
    *
    * Max_Attribute_Records = 1 + 2*2 + 1*no_of_char_with_notify_or_indicate_property + 1*no_of_char_with_broadcast_property
    * service_max_attribute_record = 1 for P2P_Server +
-   *                                3 for LED_C +
+   *                                2 for LED_C +
    *                                2 for SWITCH_C +
    *                                1 for SWITCH_C configuration descriptor +
-   *                              = 7
+   *                              = 6
    */
   COPY_P2P_SERVER_UUID(uuid.Char_UUID_128);
   ret = aci_gatt_add_service(UUID_TYPE_128,
                              (Service_UUID_t *) &uuid,
                              PRIMARY_SERVICE,
-                             7,
+                             6,
                              &(P2P_SERVER_Context.P2p_serverSvcHdle));
   if (ret != BLE_STATUS_SUCCESS)
   {

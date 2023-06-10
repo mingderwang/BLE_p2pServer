@@ -68,6 +68,8 @@
 "./Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_rng_ex.o"
 "./Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_rtc.o"
 "./Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_rtc_ex.o"
+"./Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_tim.o"
+"./Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_tim_ex.o"
 "./Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_uart.o"
 "./Drivers/STM32WBAxx_HAL_Driver/stm32wbaxx_hal_uart_ex.o"
 "./Middlewares/STM32_WPAN/ll_sys_cs.o"
