@@ -1,4 +1,0 @@
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/ble_timer.c:107:13:BLE_TIMER_Callback	8	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/ble_timer.c:48:6:BLE_TIMER_Init	8	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/ble_timer.c:93:6:BLE_TIMER_Stop	24	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/ble_timer.c:57:9:BLE_TIMER_Start	32	static

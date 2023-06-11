@@ -1,7 +1,0 @@
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/Target/ll_sys_if.c:104:6:request_temperature_measurement	16	static,ignoring_inline_asm
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/Target/ll_sys_if.c:62:6:ll_sys_bg_process_init	0	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/Target/ll_sys_if.c:73:6:ll_sys_schedule_bg_process	0	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/Target/ll_sys_if.c:78:6:ll_sys_config_params	8	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/Target/ll_sys_if.c:99:6:ll_sys_bg_temperature_measurement	0	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/Target/ll_sys_if.c:118:6:LINKLAYER_PLAT_EnableOSContextSwitch	0	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/STM32_WPAN/Target/ll_sys_if.c:123:6:LINKLAYER_PLAT_DisableOSContextSwitch	0	static

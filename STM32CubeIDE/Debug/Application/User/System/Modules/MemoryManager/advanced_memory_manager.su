@@ -1,6 +1,0 @@
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/MemoryManager/advanced_memory_manager.c:581:6:pushPending	0	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/MemoryManager/advanced_memory_manager.c:127:22:AMM_Init	40	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/MemoryManager/advanced_memory_manager.c:284:22:AMM_DeInit	16	static
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/MemoryManager/advanced_memory_manager.c:318:22:AMM_Alloc	56	static,ignoring_inline_asm
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/MemoryManager/advanced_memory_manager.c:469:22:AMM_Free	24	static,ignoring_inline_asm
-/Volumes/Untitled/STM32CubeIDE/workspace/BLE_p2pServer/System/Modules/MemoryManager/advanced_memory_manager.c:562:6:AMM_BackgroundProcess	24	static
