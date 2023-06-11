@@ -46,6 +46,7 @@
     uint8_t             Device_Button_Selection;
     uint8_t             ButtonStatus;
  }P2P_ButtonCharValue_t;
+
 /* USER CODE END PTD */
 
 typedef enum
@@ -103,7 +104,7 @@ static void P2P_SERVER_APP_LED_BUTTON_context_Init(void);
 void P2P_SERVER_Notification(P2P_SERVER_NotificationEvt_t *p_Notification)
 {
   /* USER CODE BEGIN Service1_Notification_1 */
-
+	Color_t color;
   /* USER CODE END Service1_Notification_1 */
   switch(p_Notification->EvtOpcode)
   {
@@ -119,6 +120,10 @@ void P2P_SERVER_Notification(P2P_SERVER_NotificationEvt_t *p_Notification)
 
     case P2P_SERVER_LED_C_WRITE_NO_RESP_EVT:
       /* USER CODE BEGIN Service1Char1_WRITE_NO_RESP_EVT */
+    	color.R = p_Notification->DataTransfered.p_Payload[0];
+    	color.G = p_Notification->DataTransfered.p_Payload[1];
+    	color.B = p_Notification->DataTransfered.p_Payload[2];
+    	Ming_Color(color);
       if(p_Notification->DataTransfered.p_Payload[1] == 0x01)
       {
         BSP_LED_On(LED_BLUE);

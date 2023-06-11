@@ -35,8 +35,6 @@
 #define TIM_DUTY_CYCLES_NB 11
 
 
-void UserButton_Callback();
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -108,6 +106,7 @@ void PeriphCommonClock_Config(void);
 static void MX_GPDMA1_Init(void);
 static void MX_ADC4_Init(void);
 static void MX_TIM3_Init(void);
+void UserButton_Callback(void);
 /* USER CODE BEGIN PFP */
 __STATIC_INLINE void Configure_DutyCycle(uint32_t D);
 /* USER CODE END PFP */
@@ -723,6 +722,11 @@ void UserButton_Callback(void)
 
   /* Change PWM signal duty cycle */
   Configure_DutyCycle(aDutyCycle[iDutyCycle]);
+}
+
+void Ming_Color(Color_t color) {
+	uint32_t a = (color.R*100/255);
+	Configure_DutyCycle(a);
 }
 
 

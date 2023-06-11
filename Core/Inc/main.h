@@ -43,6 +43,12 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
+typedef struct{
+   uint16_t             R;
+   uint16_t             G;
+   uint16_t			 B;
+}Color_t;
+
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -68,6 +74,7 @@ void MX_CRC_Init(void);
 void MX_RNG_Init(void);
 
 /* USER CODE BEGIN EFP */
+void Ming_Color(Color_t color);
 
 /* USER CODE END EFP */
 
