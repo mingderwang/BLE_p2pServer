@@ -87,6 +87,11 @@ static uint8_t iDutyCycle = 0;
 static uint32_t aDutyCycle[TIM_DUTYCYCLE_NB] = { 2, /*  50% */
 4, /*  25% */
 };
+
+/* TIM2 Clock */
+static uint32_t TimOutClock = 1;
+uint32_t timxPrescaler = 0;
+uint32_t timxPeriod = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -142,8 +147,12 @@ int main(void)
   PeriphCommonClock_Config();
 
   /* USER CODE BEGIN SysInit */
-	/* Configure LD3 */
-	//BSP_LED_Init(LD3);
+  /* - Set the pre-scaler value to have TIM3 counter clock equal to 10 kHz  */
+  /* - Set the auto-reload value to have a counter frequency of 100 Hz        */
+  /* TIM3CLK = SystemCoreClock / (APB prescaler & multiplier)               */
+  TimOutClock = SystemCoreClock/1;
+  timxPrescaler = __LL_TIM_CALC_PSC(SystemCoreClock, 10000);
+  timxPeriod = __LL_TIM_CALC_ARR(TimOutClock, timxPrescaler, 100);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -158,19 +167,37 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 	/* Start Input waveform generation */
-	if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1) != HAL_OK) {
+	if (HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1) != HAL_OK) {
 		/* PWM Generation Error */
 		Error_Handler();
 	}
 
   /* USER CODE END 2 */
+	  /**************************/
+	  /* TIM3 interrupts set-up */
+	  /**************************/
+	  /* Enable the capture/compare interrupt for channel 1 */
+	  LL_TIM_EnableIT_CC1(TIM3);
+
+	  /**********************************/
+	  /* Start output signal generation */
+	  /**********************************/
+	  /* Enable output channel 1 */
+	  LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH1);
+
+	  /* Enable counter */
+	  LL_TIM_EnableCounter(TIM3);
+
+	  /* Force update generation */
+	  LL_TIM_GenerateEvent_UPDATE(TIM3);
+
 
   /* Init code for STM32_WPAN */
   MX_APPE_Init(NULL);
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	UserButton_Callback();
+  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 50);
 	while (1) {
     /* USER CODE END WHILE */
     MX_APPE_Process();
@@ -557,11 +584,11 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 0;
+  htim3.Init.Prescaler = timxPrescaler;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 65535;
+  htim3.Init.Period = timxPeriod;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
   {
     Error_Handler();
@@ -573,7 +600,7 @@ static void MX_TIM3_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
+  sConfigOC.Pulse = ((timxPeriod + 1 ) / 2);
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
