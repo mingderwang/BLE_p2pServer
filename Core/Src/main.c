@@ -31,10 +31,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+/* Number of output compare modes */
+#define TIM_DUTY_CYCLES_NB 11
 
-/* Number of frequencies */
-#define TIM_FREQUENCIES_NB 6
-#define TIM_DUTYCYCLE_NB 10
 
 void UserButton_Callback();
 
@@ -74,26 +73,33 @@ __IO uint32_t uwFrequency = 0;
 /* Counter Prescaler value */
 uint32_t uhPrescalerValue = 0;
 
-static uint8_t iFrequency = 0;
-/* Frequency index *//* Frequency table */
-static uint32_t aFrequency[TIM_FREQUENCIES_NB] = { 1000, /*  1 kHz */
-2000, /*  2 kHz */
-3000, /*  3 kHz */
-3000, /*  3 kHz */
-4000, /*  4 kHz */
-4000, /*  4 kHz */
+/* Duty cycles: D = T/P * 100%                                                */
+/* where T is the pulse duration and P  the period of the PWM signal          */
+static uint32_t aDutyCycle[TIM_DUTY_CYCLES_NB] = {
+  0,    /*  0% */
+  10,   /* 10% */
+  20,   /* 20% */
+  30,   /* 30% */
+  40,   /* 40% */
+  50,   /* 50% */
+  60,   /* 60% */
+  70,   /* 70% */
+  80,   /* 80% */
+  90,   /* 90% */
+  100,  /* 100% */
 };
-/* Frequency index */
 
+/* Duty cycle index */
 static uint8_t iDutyCycle = 0;
-static uint32_t aDutyCycle[TIM_DUTYCYCLE_NB] = { 1000, 1111, 1250, /*  50% */
-1428, 1667, 2000, 2500, 3333, 5000, 10000 /*  25% */
-};
+
+/* Measured duty cycle */
+__IO uint32_t uwMeasuredDutyCycle = 0;
 
 /* TIM2 Clock */
 static uint32_t TimOutClock = 1;
 uint32_t timxPrescaler = 0;
 uint32_t timxPeriod = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -103,7 +109,7 @@ static void MX_GPDMA1_Init(void);
 static void MX_ADC4_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
-
+__STATIC_INLINE void Configure_DutyCycle(uint32_t D);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -153,7 +159,7 @@ int main(void) {
 	/* TIM3CLK = SystemCoreClock / (APB prescaler & multiplier)               */
 	TimOutClock = SystemCoreClock / 1;
 	timxPrescaler = __LL_TIM_CALC_PSC(SystemCoreClock, 10000);
-	timxPeriod = __LL_TIM_CALC_ARR(TimOutClock, timxPrescaler, 100);
+	timxPeriod = __LL_TIM_CALC_ARR(TimOutClock, timxPrescaler, 200);
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
@@ -691,28 +697,36 @@ void MX_GPIO_Init(void) {
 }
 
 /* USER CODE BEGIN 4 */
-
 /**
- * @brief EXTI line detection callbacks
- * @param GPIO_Pin: Specifies the pins connected EXTI line
- * @retval None
- */
-void UserButton_Callback() {
-	/* Set new PWM signal frequency and duty cycle*/
-	iFrequency = (iFrequency) % TIM_FREQUENCIES_NB;
-	iDutyCycle = (iDutyCycle + 1) % TIM_DUTYCYCLE_NB;
+  * @brief  Changes the duty cycle of the PWM signal.
+  *         D = (T/P)*100
+  *           where T is the pulse duration and P is the PWM signal period
+  * @param  D Duty cycle
+  * @retval None
+  */
+__STATIC_INLINE void Configure_DutyCycle(uint32_t D)
+{
+  uint32_t P;    /* Pulse duration */
+  uint32_t T;    /* PWM signal period */
 
-	/* Set the auto-reload value to have the requested frequency */
-	/* Frequency = TIM2CLK / (ARR + 1) = SystemCoreClock / (ARR + 1)  */
-	LL_TIM_SetAutoReload(TIM3,
-			__LL_TIM_CALC_ARR(SystemCoreClock / 1, LL_TIM_GetPrescaler(TIM3),
-					aFrequency[iFrequency]));
+  /* PWM signal period is determined by the value of the auto-reload register */
+  T = LL_TIM_GetAutoReload(TIM3) + 1;
 
-	/* Set  duty cycle */
-	LL_TIM_OC_SetCompareCH1(TIM3,
-			(LL_TIM_GetAutoReload(TIM3) / (aDutyCycle[iDutyCycle]/1000)));
-
+  /* Pulse duration is determined by the value of the compare register.       */
+  /* Its value is calculated in order to match the requested duty cycle.      */
+  P = (D*T)/100;
+  LL_TIM_OC_SetCompareCH1(TIM3, P);
 }
+
+void UserButton_Callback(void)
+{
+  /* Set new duty cycle */
+  iDutyCycle = (iDutyCycle + 1) % TIM_DUTY_CYCLES_NB;
+
+  /* Change PWM signal duty cycle */
+  Configure_DutyCycle(aDutyCycle[iDutyCycle]);
+}
+
 
 /**
  * @brief  Input Capture callback in non blocking mode
