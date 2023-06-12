@@ -34,7 +34,6 @@
 /* Number of output compare modes */
 #define TIM_DUTY_CYCLES_NB 11
 
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -73,18 +72,17 @@ uint32_t uhPrescalerValue = 0;
 
 /* Duty cycles: D = T/P * 100%                                                */
 /* where T is the pulse duration and P  the period of the PWM signal          */
-static uint32_t aDutyCycle[TIM_DUTY_CYCLES_NB] = {
-  0,    /*  0% */
-  10,   /* 10% */
-  20,   /* 20% */
-  30,   /* 30% */
-  40,   /* 40% */
-  50,   /* 50% */
-  60,   /* 60% */
-  70,   /* 70% */
-  80,   /* 80% */
-  90,   /* 90% */
-  100,  /* 100% */
+static uint32_t aDutyCycle[TIM_DUTY_CYCLES_NB] = { 0, /*  0% */
+10, /* 10% */
+20, /* 20% */
+30, /* 30% */
+40, /* 40% */
+50, /* 50% */
+60, /* 60% */
+70, /* 70% */
+80, /* 80% */
+90, /* 90% */
+100, /* 100% */
 };
 
 /* Duty cycle index */
@@ -106,7 +104,6 @@ void PeriphCommonClock_Config(void);
 static void MX_GPDMA1_Init(void);
 static void MX_ADC4_Init(void);
 static void MX_TIM3_Init(void);
-
 /* USER CODE BEGIN PFP */
 __STATIC_INLINE void Configure_DutyCycle(uint32_t D);
 void UserButton_Callback(void);
@@ -197,7 +194,6 @@ int main(void) {
 	LL_TIM_GenerateEvent_UPDATE(TIM3);
 	/* USER CODE END 2 */
 
-
 	/* Init code for STM32_WPAN */
 	MX_APPE_Init(NULL);
 
@@ -207,6 +203,7 @@ int main(void) {
 	while (1) {
 		/* USER CODE END WHILE */
 		MX_APPE_Process();
+
 		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
@@ -565,9 +562,9 @@ static void MX_TIM3_Init(void) {
 
 	/* USER CODE END TIM3_Init 1 */
 	htim3.Instance = TIM3;
-	htim3.Init.Prescaler = timxPrescaler;
+	htim3.Init.Prescaler = 2;
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim3.Init.Period = timxPeriod;
+	htim3.Init.Period = 56666;
 	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
 	if (HAL_TIM_PWM_Init(&htim3) != HAL_OK) {
@@ -580,7 +577,7 @@ static void MX_TIM3_Init(void) {
 		Error_Handler();
 	}
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = ((timxPeriod + 1) / 2);
+	sConfigOC.Pulse = 28334;
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
 	if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1)
@@ -696,40 +693,37 @@ void MX_GPIO_Init(void) {
 
 /* USER CODE BEGIN 4 */
 /**
-  * @brief  Changes the duty cycle of the PWM signal.
-  *         D = (T/P)*100
-  *           where T is the pulse duration and P is the PWM signal period
-  * @param  D Duty cycle
-  * @retval None
-  */
-__STATIC_INLINE void Configure_DutyCycle(uint32_t D)
-{
-  uint32_t P;    /* Pulse duration */
-  uint32_t T;    /* PWM signal period */
+ * @brief  Changes the duty cycle of the PWM signal.
+ *         D = (T/P)*100
+ *           where T is the pulse duration and P is the PWM signal period
+ * @param  D Duty cycle
+ * @retval None
+ */
+__STATIC_INLINE void Configure_DutyCycle(uint32_t D) {
+	uint32_t P; /* Pulse duration */
+	uint32_t T; /* PWM signal period */
 
-  /* PWM signal period is determined by the value of the auto-reload register */
-  T = LL_TIM_GetAutoReload(TIM3) + 1;
+	/* PWM signal period is determined by the value of the auto-reload register */
+	T = LL_TIM_GetAutoReload(TIM3) + 1;
 
-  /* Pulse duration is determined by the value of the compare register.       */
-  /* Its value is calculated in order to match the requested duty cycle.      */
-  P = (D*T)/100;
-  LL_TIM_OC_SetCompareCH1(TIM3, P);
+	/* Pulse duration is determined by the value of the compare register.       */
+	/* Its value is calculated in order to match the requested duty cycle.      */
+	P = (D * T) / 100;
+	LL_TIM_OC_SetCompareCH1(TIM3, P);
 }
 
-void UserButton_Callback(void)
-{
-  /* Set new duty cycle */
-  iDutyCycle = (iDutyCycle + 1) % TIM_DUTY_CYCLES_NB;
+void UserButton_Callback(void) {
+	/* Set new duty cycle */
+	iDutyCycle = (iDutyCycle + 1) % TIM_DUTY_CYCLES_NB;
 
-  /* Change PWM signal duty cycle */
-  Configure_DutyCycle(aDutyCycle[iDutyCycle]);
+	/* Change PWM signal duty cycle */
+	Configure_DutyCycle(aDutyCycle[iDutyCycle]);
 }
 
 void Ming_Color(Color_t color) {
-	uint32_t a = (color.R*100/255);
+	uint32_t a = (color.R * 100 / 255);
 	Configure_DutyCycle(a);
 }
-
 
 /**
  * @brief  Input Capture callback in non blocking mode
