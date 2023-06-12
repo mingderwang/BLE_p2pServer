@@ -52,7 +52,9 @@ RNG_HandleTypeDef hrng;
 
 RTC_HandleTypeDef hrtc;
 
+TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim17;
 
 UART_HandleTypeDef huart1;
 DMA_HandleTypeDef handle_GPDMA1_Channel1;
@@ -85,9 +87,6 @@ static uint32_t aDutyCycle[TIM_DUTY_CYCLES_NB] = { 0, /*  0% */
 100, /* 100% */
 };
 
-/* Duty cycle index */
-static uint8_t iDutyCycle = 0;
-
 /* Measured duty cycle */
 __IO uint32_t uwMeasuredDutyCycle = 0;
 
@@ -95,6 +94,10 @@ __IO uint32_t uwMeasuredDutyCycle = 0;
 static uint32_t TimOutClock = 1;
 uint32_t timxPrescaler = 0;
 uint32_t timxPeriod = 0;
+uint32_t timxPrescaler2 = 0;
+uint32_t timxPeriod2 = 0;
+uint32_t timxPrescaler3 = 0;
+uint32_t timxPeriod3 = 0;
 
 /* USER CODE END PV */
 
@@ -104,6 +107,8 @@ void PeriphCommonClock_Config(void);
 static void MX_GPDMA1_Init(void);
 static void MX_ADC4_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_TIM2_Init(void);
+static void MX_TIM17_Init(void);
 /* USER CODE BEGIN PFP */
 __STATIC_INLINE void Configure_DutyCycle(uint32_t R, uint32_t G, uint32_t B);
 void UserButton_Callback(void);
@@ -158,6 +163,10 @@ int main(void)
 	TimOutClock = SystemCoreClock / 1;
 	timxPrescaler = __LL_TIM_CALC_PSC(SystemCoreClock, 10000);
 	timxPeriod = __LL_TIM_CALC_ARR(TimOutClock, timxPrescaler, 200);
+	timxPrescaler2 = __LL_TIM_CALC_PSC(SystemCoreClock, 10000);
+	timxPeriod2 = __LL_TIM_CALC_ARR(TimOutClock, timxPrescaler2, 200);
+	timxPrescaler3 = __LL_TIM_CALC_PSC(SystemCoreClock, 10000);
+	timxPeriod3 = __LL_TIM_CALC_ARR(TimOutClock, timxPrescaler3, 200);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -170,41 +179,48 @@ int main(void)
   MX_ADC4_Init();
   MX_RNG_Init();
   MX_TIM3_Init();
+  MX_TIM2_Init();
+  MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
+
+	if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1) != HAL_OK) {
+		/* PWM Generation Error */
+		Error_Handler();
+	}
 	/* Start Input waveform generation */
 	if (HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1) != HAL_OK) {
 		/* PWM Generation Error */
 		Error_Handler();
 	}
-	if (HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2) != HAL_OK) {
-		/* PWM Generation Error */
-		Error_Handler();
-	}
-	if (HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3) != HAL_OK) {
+	if (HAL_TIM_PWM_Start(&htim17, TIM_CHANNEL_1) != HAL_OK) {
 		/* PWM Generation Error */
 		Error_Handler();
 	}
 	/**************************/
 	/* TIM3 interrupts set-up */
 	/**************************/
+	LL_TIM_EnableIT_CC1(TIM2);
 	/* Enable the capture/compare interrupt for channel 1 */
 	LL_TIM_EnableIT_CC1(TIM3);
-	LL_TIM_EnableIT_CC2(TIM3);
-	LL_TIM_EnableIT_CC3(TIM3);
+	LL_TIM_EnableIT_CC1(TIM17);
 
 	/**********************************/
 	/* Start output signal generation */
 	/**********************************/
+	LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1);
 	/* Enable output channel 1 */
 	LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH1);
-	LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH2);
-	LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH3);
+	LL_TIM_CC_EnableChannel(TIM17, LL_TIM_CHANNEL_CH1);
 
 	/* Enable counter */
+	LL_TIM_EnableCounter(TIM2);
 	LL_TIM_EnableCounter(TIM3);
+	LL_TIM_EnableCounter(TIM17);
 
 	/* Force update generation */
+	LL_TIM_GenerateEvent_UPDATE(TIM2);
 	LL_TIM_GenerateEvent_UPDATE(TIM3);
+	LL_TIM_GenerateEvent_UPDATE(TIM17);
   /* USER CODE END 2 */
 
   /* Init code for STM32_WPAN */
@@ -212,9 +228,10 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 100);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 50);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 50);
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 50);
+	__HAL_TIM_SET_COMPARE(&htim17, TIM_CHANNEL_1, 50);
+
 	while (1) {
     /* USER CODE END WHILE */
     MX_APPE_Process();
@@ -583,6 +600,55 @@ void MX_RTC_Init(void)
 }
 
 /**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = timxPrescaler2;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = timxPeriod2;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = ((timxPeriod2 + 1)/2);
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+  HAL_TIM_MspPostInit(&htim2);
+
+}
+
+/**
   * @brief TIM3 Initialization Function
   * @param None
   * @retval None
@@ -624,18 +690,73 @@ static void MX_TIM3_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN TIM3_Init 2 */
 
   /* USER CODE END TIM3_Init 2 */
   HAL_TIM_MspPostInit(&htim3);
+
+}
+
+/**
+  * @brief TIM17 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM17_Init(void)
+{
+
+  /* USER CODE BEGIN TIM17_Init 0 */
+
+  /* USER CODE END TIM17_Init 0 */
+
+  TIM_OC_InitTypeDef sConfigOC = {0};
+  TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
+
+  /* USER CODE BEGIN TIM17_Init 1 */
+
+  /* USER CODE END TIM17_Init 1 */
+  htim17.Instance = TIM17;
+  htim17.Init.Prescaler = timxPrescaler3;
+  htim17.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim17.Init.Period = timxPeriod3;
+  htim17.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim17.Init.RepetitionCounter = 0;
+  htim17.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim17) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_Init(&htim17) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = ((timxPeriod3+1)/2);
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+  if (HAL_TIM_PWM_ConfigChannel(&htim17, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
+  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
+  sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
+  sBreakDeadTimeConfig.DeadTime = 0;
+  sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
+  sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
+  sBreakDeadTimeConfig.BreakFilter = 0;
+  sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
+  if (HAL_TIMEx_ConfigBreakDeadTime(&htim17, &sBreakDeadTimeConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM17_Init 2 */
+
+  /* USER CODE END TIM17_Init 2 */
+  HAL_TIM_MspPostInit(&htim17);
 
 }
 
@@ -764,8 +885,8 @@ __STATIC_INLINE void Configure_DutyCycle(uint32_t R, uint32_t G, uint32_t B) {
 	PG = (G * T) / 100;
 	PB = (B * T) / 100;
 	LL_TIM_OC_SetCompareCH1(TIM3, PR);
-	LL_TIM_OC_SetCompareCH2(TIM3, PG);
-	LL_TIM_OC_SetCompareCH3(TIM3, PB);
+	LL_TIM_OC_SetCompareCH1(TIM2, PG);
+	LL_TIM_OC_SetCompareCH1(TIM17, PB);
 }
 
 void Ming_Color(Color_t color) {
