@@ -79,6 +79,12 @@ void Ming_Color(Color_t color);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define TIM3_CH1_Pin GPIO_PIN_2
+#define TIM3_CH1_GPIO_Port GPIOA
+#define TIM3_CH2_Pin GPIO_PIN_1
+#define TIM3_CH2_GPIO_Port GPIOA
+#define TIM3_CH3_Pin GPIO_PIN_0
+#define TIM3_CH3_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 
