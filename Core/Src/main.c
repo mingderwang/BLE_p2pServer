@@ -106,9 +106,10 @@ void PeriphCommonClock_Config(void);
 static void MX_GPDMA1_Init(void);
 static void MX_ADC4_Init(void);
 static void MX_TIM3_Init(void);
-void UserButton_Callback(void);
+
 /* USER CODE BEGIN PFP */
 __STATIC_INLINE void Configure_DutyCycle(uint32_t D);
+void UserButton_Callback(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -177,8 +178,6 @@ int main(void) {
 		/* PWM Generation Error */
 		Error_Handler();
 	}
-
-	/* USER CODE END 2 */
 	/**************************/
 	/* TIM3 interrupts set-up */
 	/**************************/
@@ -196,6 +195,8 @@ int main(void) {
 
 	/* Force update generation */
 	LL_TIM_GenerateEvent_UPDATE(TIM3);
+	/* USER CODE END 2 */
+
 
 	/* Init code for STM32_WPAN */
 	MX_APPE_Init(NULL);
