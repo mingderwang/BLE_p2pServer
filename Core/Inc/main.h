@@ -83,6 +83,8 @@ void Ming_Color(Color_t color);
 #define TIM2_CH1_GPIO_Port GPIOA
 #define TIM3_CH1_Pin GPIO_PIN_2
 #define TIM3_CH1_GPIO_Port GPIOA
+#define TIM17_CH1_Pin GPIO_PIN_1
+#define TIM17_CH1_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 
