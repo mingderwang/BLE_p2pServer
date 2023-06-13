@@ -208,7 +208,7 @@ static BleApplicationContext_t bleAppContext;
 
 P2P_SERVER_APP_ConnHandleNotEvt_t P2P_SERVERHandleNotification;
 
-static const char a_GapDeviceName[] = {  'P', 'e', 'e', 'r', ' ', 't', 'o', ' ', 'P', 'e', 'e', 'r', ' ', 'S', 'e', 'r', 'v', 'e', 'r' }; /* Gap Device Name */
+static const char a_GapDeviceName[] = {  'C', 'o', 'l', 'o', 'r', ' ', 'L', 'E', 'D', ' ', 'S', 't', 'r', 'i', 'p' }; /* Gap Device Name */
 
 /**
  * Advertising Data
